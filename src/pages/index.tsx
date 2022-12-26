@@ -3,6 +3,7 @@ import Head from "next/head";
 import { prisma } from "../server/db/client";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion"
 
 export const getStaticProps: GetStaticProps = async (context) => {
 
@@ -40,10 +41,14 @@ const Home: NextPage<Props> = ({ categories }) => {
       <main className="min-h-screen flex flex-col md:flex-row items-center justify-evenly gap-2">
         {/* map thru the products */}
         {categories && categories.map((category) => (
-          <Link href={'/category/' + category.id} key={category.id}><div className="flex flex-col items-center justify-center border-2 border-white rounded-lg">
+          <Link href={'/category/' + category.id} key={category.id}><motion.div className="flex flex-col items-center justify-center border-2 border-white rounded-lg"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.5, duration: 1.5, type: "spring" }}
+          >
             <h1 className="text-2xl">{category.name}</h1>
             <Image src={category.image} width={370} height={370} alt={category.name} priority />
-          </div></Link>
+          </motion.div></Link>
         ))}
       </main>
     </>
